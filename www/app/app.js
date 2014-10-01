@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('discountAsciiWarehouseApp', ['ngRoute'])
+angular.module('seedApp', ['ngRoute'])
 	.config(function($routeProvider, $locationProvider) {
 		$routeProvider
 			.otherwise({

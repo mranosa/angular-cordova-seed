@@ -7,8 +7,9 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="app/app.css">
     </head>
-    <body>
+    <body ng-app="seedApp">
         
         <div ng-view="">
             Cordova Initializing! Please wait.
@@ -25,11 +26,10 @@
         <script src="bower_components/angular-route/angular-route.js"></script>
 
         <!-- scripts -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/main/main.controller.js"></script>
-        <script src="scripts/main/main.js"></script>
+        <script src="app/app.js"></script>
+        <script src="app/main/main.controller.js"></script>
+        <script src="app/main/main.js"></script>
 
-        <script src="scripts/cordova.init.js"></script>
         <script src="cordova.js"></script>
     </body>
 </html>
