@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('seedApp', ['ngRoute', 'ngCordovaMocks'])
-	.config(function($routeProvider, $locationProvider) {
+	.config(function($routeProvider) {
 		$routeProvider
 			.otherwise({
 				redirectTo: '/'
 			});
-
-		$locationProvider.html5Mode(true);
+			
 	});
