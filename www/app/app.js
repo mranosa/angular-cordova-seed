@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('seedApp', ['ngRoute'])
+angular.module('seedApp', ['ngRoute', 'ngCordovaMocks'])
 	.config(function($routeProvider, $locationProvider) {
 		$routeProvider
 			.otherwise({

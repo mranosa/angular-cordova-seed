@@ -15,10 +15,19 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'www/bower_components/jquery/jquery.js',
+      'www/bower_components/es5-shim/es5-shim.js',
       'www/bower_components/angular/angular.js',
       'www/bower_components/angular-mocks/angular-mocks.js',
       'www/bower_components/angular-resource/angular-resource.js',
+      'www/bower_components/json3/lib/json3.min.js',
+      'www/bower_components/sass-bootstrap/dist/js/bootstrap.js',
+      'www/bower_components/angular-resource/angular-resource.js',
+      'www/bower_components/angular-cookies/angular-cookies.js',
+      'www/bower_components/angular-sanitize/angular-sanitize.js',
       'www/bower_components/angular-route/angular-route.js',
+      'www/bower_components/ngCordova/dist/ng-cordova.js',
+      'www/bower_components/ng-cordova-mocks/dist/ngCordovaMocks.js',
       'www/app/app.js',
       'www/app/**/*.js'
     ],
