@@ -1,0 +1,2 @@
+angular-cordova-seed
+====================
