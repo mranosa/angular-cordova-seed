@@ -1,0 +1,13 @@
+{
+  "name": "angular-cordova-seed",
+  "version": "0.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "ecstatic": "~0.5.4"
+  },
+  "devDependencies": {
+    "karma": "^0.12.23",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-jasmine": "^0.1.5"
+  }
+}
