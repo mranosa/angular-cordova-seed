@@ -40,6 +40,6 @@ MIT
 
 **Free Software, Hell Yeah!**
 
-[AngularJS]:http://ngcordova.com/
-[ngCordova]:https://angularjs.org/
+[AngularJS]:https://angularjs.org/
+[ngCordova]:http://ngcordova.com/
 [ngCordovaMocks]:https://github.com/ecofic/ngCordovaMocks
