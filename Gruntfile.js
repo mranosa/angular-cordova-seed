@@ -73,6 +73,12 @@ module.exports = function(grunt) {
         }
       }
     },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
+      }
+    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -80,7 +86,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/app/**/*.js'],
-        tasks: ['newer:jshint'],
+        tasks: ['newer:jshint', 'karma'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -100,7 +106,7 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', ['jshint', 'karma']);
   grunt.registerTask('serve', ['jshint', 'connect:livereload', 'watch']);
 
 };
