@@ -8,6 +8,7 @@
     "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-newer": "^0.7.0",
     "karma": "^0.12.23",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",

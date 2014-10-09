@@ -6,9 +6,13 @@ module.exports = function(grunt) {
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
+  var appConfig = {
+    app: require('./bower.json').appPath || 'www'
+  };
+
   // Project configuration.
   grunt.initConfig({
-    // Task configuration.
+    yeoman: appConfig,
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
       options: {
@@ -46,18 +50,26 @@ module.exports = function(grunt) {
       },
       gruntfile: {
         src: 'Gruntfile.js'
-      },
-      lib_test: {
-        src: ['www/app/**/*.js']
       }
     },
     connect: {
-      server: {
+      options: {
+        port: 9000,
+        hostname: 'localhost',
+        livereload: 35729
+      },
+      livereload: {
         options: {
-          port: 9000,
-          hostname: 'localhost',
-          base: 'www',
-          keepalive: true
+          open: true,
+          middleware: function(connect) {
+            return [
+              connect().use(
+                '/<%= yeoman.app %>/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
+            ];
+          }
         }
       }
     },
@@ -66,15 +78,29 @@ module.exports = function(grunt) {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
       },
-      lib_test: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'nodeunit']
+      js: {
+        files: ['<%= yeoman.app %>/app/**/*.js'],
+        tasks: ['newer:jshint'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+
+      // TODO add watch for styles
+
+      livereload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
+        files: [
+          '<%= yeoman.app %>/**/*.{png,jpg,jpeg,gif,webp,svg,html,css}'
+        ]
       }
     }
   });
 
   // Default task.
   grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('serve', ['jshint', 'connect']);
+  grunt.registerTask('serve', ['jshint', 'connect:livereload', 'watch']);
 
 };
