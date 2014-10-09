@@ -3,6 +3,9 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
+  // Load grunt tasks automatically
+  require('load-grunt-tasks')(grunt);
+
   // Project configuration.
   grunt.initConfig({
     // Task configuration.
@@ -37,7 +40,8 @@ module.exports = function(grunt) {
           expect: true,
           browser: true,
           element: true,
-          by: true
+          by: true,
+          require: true
         }
       },
       gruntfile: {
@@ -60,8 +64,8 @@ module.exports = function(grunt) {
   });
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  // grunt.loadNpmTasks('grunt-contrib-jshint');
+  // grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
   grunt.registerTask('default', ['jshint']);
