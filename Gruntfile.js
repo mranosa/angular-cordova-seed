@@ -105,7 +105,17 @@ module.exports = function(grunt) {
         }
       }
     },
+    wiredep: {
+      app: {
+        src: ['<%= yeoman.app %>/index.html'],
+        ignorePath:  /\.\.\//
+      }
+    },
     watch: {
+      bower: {
+        files: ['bower.json'],
+        tasks: ['wiredep']
+      },
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
@@ -117,9 +127,6 @@ module.exports = function(grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
-
-      // TODO add watch for styles
-
       livereload: {
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -133,7 +140,7 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'karma']);
-  grunt.registerTask('serve', ['jshint', 'karma', 'connect:livereload', 'watch']);
+  grunt.registerTask('serve', ['jshint', 'karma', 'wiredep', 'connect:livereload', 'watch']);
 
   grunt.registerTask('test', function(target) {
     if (target === 'unit') {
@@ -143,6 +150,7 @@ module.exports = function(grunt) {
       ]);
     } else if (target === 'e2e') {
       return grunt.task.run([
+        'wiredep',
         'connect:test',
         'protractor'
       ]);
