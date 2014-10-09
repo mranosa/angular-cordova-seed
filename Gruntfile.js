@@ -51,6 +51,16 @@ module.exports = function(grunt) {
         src: ['www/app/**/*.js']
       }
     },
+    connect: {
+      server: {
+        options: {
+          port: 9000,
+          hostname: 'localhost',
+          base: 'www',
+          keepalive: true
+        }
+      }
+    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -63,11 +73,8 @@ module.exports = function(grunt) {
     }
   });
 
-  // These plugins provide necessary tasks.
-  // grunt.loadNpmTasks('grunt-contrib-jshint');
-  // grunt.loadNpmTasks('grunt-contrib-watch');
-
   // Default task.
   grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('serve', ['jshint', 'connect']);
 
 };
