@@ -17,5 +17,5 @@ angular.module('seedApp')
 		}, {
 			name: 'Caramels jujubes',
 			info: '...'
-		}]
+		}];
 	});
