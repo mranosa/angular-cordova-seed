@@ -1,3 +1,5 @@
+'use strict';
+
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -18,8 +20,24 @@ module.exports = function(grunt) {
         unused: true,
         boss: true,
         eqnull: true,
+        strict: true,
+        globalstrict: true,
         globals: {
-          jQuery: true
+          jQuery: true,
+          angular: true,
+          console: true,
+          $: true,
+          _: true,
+          moment: true,
+          describe: true,
+          beforeEach: true,
+          module: true,
+          inject: true,
+          it: true,
+          expect: true,
+          browser: true,
+          element: true,
+          by: true
         }
       },
       gruntfile: {
