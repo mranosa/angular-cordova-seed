@@ -71,12 +71,38 @@ module.exports = function(grunt) {
             ];
           }
         }
+      },
+      test: {
+        options: {
+          port: 9000,
+          middleware: function(connect) {
+            return [
+              connect().use(
+                '/<%= yeoman.app %>/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
+            ];
+          }
+        }
       }
     },
     karma: {
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
+      }
+    },
+    protractor: {
+      options: {
+        configFile: 'protractor.conf.js'
+      },
+      chrome: {
+        options: {
+          args: {
+            browser: 'chrome'
+          }
+        }
       }
     },
     watch: {
@@ -107,6 +133,25 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'karma']);
-  grunt.registerTask('serve', ['jshint', 'connect:livereload', 'watch']);
+  grunt.registerTask('serve', ['jshint', 'karma', 'connect:livereload', 'watch']);
+
+  grunt.registerTask('test', function(target) {
+    if (target === 'unit') {
+      return grunt.task.run([
+        'jshint',
+        'karma'
+      ]);
+    } else if (target === 'e2e') {
+      return grunt.task.run([
+        'connect:test',
+        'protractor'
+      ]);
+    } else {
+      grunt.task.run([
+        'test:unit',
+        'test:e2e'
+      ]);
+    }
+  });
 
 };
