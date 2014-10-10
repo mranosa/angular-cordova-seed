@@ -144,6 +144,9 @@ module.exports = function(grunt) {
         }]
       }
     },
+    inlinelint: {
+      html: ['<%= yeoman.app %>/app/**/*.html', '<%= yeoman.app %>/index.html']
+    },
     watch: {
       bower: {
         files: ['bower.json'],
@@ -156,6 +159,13 @@ module.exports = function(grunt) {
       js: {
         files: ['<%= yeoman.app %>/app/**/*.js'],
         tasks: ['newer:jshint', 'karma'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+      html: {
+        files: ['<%= yeoman.app %>/app/**/*.html', '<%= yeoman.app %>/index.html'],
+        tasks: ['newer:inlinelint'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -174,6 +184,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['jshint', 'karma']);
   grunt.registerTask('serve', [
+    'inlinelint',
     'jshint',
     'karma',
     'cordova:clean',
