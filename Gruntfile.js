@@ -155,6 +155,25 @@ module.exports = function(grunt) {
         src: ['<%= yeoman.app %>/assets/**/*.css']
       }
     },
+    htmlangular: {
+      options: {
+        reportPath: null,
+        customattrs: ['*'],
+        relaxerror: [
+          'Element head is missing a required instance of child element title.',
+          'Element comma not allowed as child of element span in this context.',
+          'A select element with a required attribute and without a multiple attribute, and whose size is 1, must have a child option element.',
+          'Element img is missing required attribute src.',
+          'The datetime-local input type is not supported in all browsers. Please be sure to test, and consider using a polyfill.',
+          'The date input type is not supported in all browsers. Please be sure to test, and consider using a polyfill',
+          'An img element must have an alt attribute, except under certain conditions. For details, consult guidance on providing text alternatives for images.',
+          'Bad value custom-date for attribute type on element input.'
+        ]
+      },
+      files: {
+        src: ['<%= yeoman.app %>/app/**/*.html']
+      }
+    },
     watch: {
       bower: {
         files: ['bower.json'],
@@ -196,6 +215,7 @@ module.exports = function(grunt) {
     'csslint',
     'jshint',
     'karma',
+    'htmlangular',
     'cordova:clean',
     'wiredep',
     'cordova:dev',

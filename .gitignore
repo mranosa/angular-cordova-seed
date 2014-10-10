@@ -3,3 +3,4 @@
 platforms/^.*
 node_modules
 bower_components
+html-angular-validate-report.json
