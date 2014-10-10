@@ -11,12 +11,12 @@
     "angular-cookies": "1.2.6",
     "angular-sanitize": "1.2.6",
     "angular-route": "1.2.6",
-    "ngCordova": "~0.1.4-alpha",
-    "ng-cordova-mocks": "~0.7.0"
+    "ngCordova": "~0.1.4-alpha"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",
-    "angular-scenario": "1.2.6"
+    "angular-scenario": "1.2.6",
+    "ng-cordova-mocks": "~0.7.0"
   },
   "resolutions": {
     "angular": "1.2.6"

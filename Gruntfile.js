@@ -108,7 +108,40 @@ module.exports = function(grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
+      }
+    },
+    replace: {
+      devCordovaIndex: {
+        src: [
+          '<%= yeoman.app %>/index.html'
+        ],
+        overwrite: true,
+        replacements: [{
+          from: 'ngCordova/dist/ng-cordova.js',
+          //TODO check me
+          to: 'ng-cordova-mocks/dist/ngCordovaMocks.js'
+        }]
+      },
+      devCordovaApp: {
+        src: [
+          '<%= yeoman.app %>/app/app.js'
+        ],
+        overwrite: true,
+        replacements: [{
+          from: 'ngCordova',
+          to: 'ngCordovaMocks'
+        }]
+      },
+      cleanCordovaApp: {
+        src: [
+          '<%= yeoman.app %>/app/app.js'
+        ],
+        overwrite: true,
+        replacements: [{
+          from: 'ngCordovaMocks',
+          to: 'ngCordova'
+        }]
       }
     },
     watch: {
@@ -140,7 +173,15 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'karma']);
-  grunt.registerTask('serve', ['jshint', 'karma', 'wiredep', 'connect:livereload', 'watch']);
+  grunt.registerTask('serve', [
+    'jshint',
+    'karma',
+    'cordova:clean',
+    'wiredep',
+    'cordova:dev',
+    'connect:livereload',
+    'watch'
+  ]);
 
   grunt.registerTask('test', function(target) {
     if (target === 'unit') {
@@ -150,7 +191,9 @@ module.exports = function(grunt) {
       ]);
     } else if (target === 'e2e') {
       return grunt.task.run([
+        'cordova:clean',
         'wiredep',
+        'cordova:dev',
         'connect:test',
         'protractor'
       ]);
@@ -158,6 +201,19 @@ module.exports = function(grunt) {
       grunt.task.run([
         'test:unit',
         'test:e2e'
+      ]);
+    }
+  });
+
+  grunt.registerTask('cordova', function(target) {
+    if (target === 'dev') {
+      return grunt.task.run([
+        'replace:devCordovaIndex',
+        'replace:devCordovaApp'
+      ]);
+    } else if (target === 'clean') {
+      grunt.task.run([
+        'replace:cleanCordovaApp'
       ]);
     }
   });
