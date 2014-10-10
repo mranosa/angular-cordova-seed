@@ -147,6 +147,14 @@ module.exports = function(grunt) {
     inlinelint: {
       html: ['<%= yeoman.app %>/app/**/*.html', '<%= yeoman.app %>/index.html']
     },
+    csslint: {
+      strict: {
+        options: {
+          import: 2
+        },
+        src: ['<%= yeoman.app %>/assets/**/*.css']
+      }
+    },
     watch: {
       bower: {
         files: ['bower.json'],
@@ -185,6 +193,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint', 'karma']);
   grunt.registerTask('serve', [
     'inlinelint',
+    'csslint',
     'jshint',
     'karma',
     'cordova:clean',
