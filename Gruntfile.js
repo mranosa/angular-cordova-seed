@@ -112,6 +112,7 @@ module.exports = function(grunt) {
     },
     wiredep: {
       app: {
+        //TODO add iphone dist later
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath: /\.\.\//
       }
@@ -179,6 +180,19 @@ module.exports = function(grunt) {
         src: ['<%= yeoman.app %>/app/**/*.html']
       }
     },
+    copy: {
+      app: {
+        flatten: true,
+        expand: true,
+        src: 'platforms/android/ant-build/*.apk',
+        dest: 'dist/'
+      }
+    },
+    clean: {
+      build: {
+        src: ['dist']
+      }
+    },
     watch: {
       bower: {
         files: ['bower.json'],
@@ -239,17 +253,12 @@ module.exports = function(grunt) {
     });
   });
 
-  // Since Apache Ripple serves assets directly out of their respective platform
-  // directories, we watch all registered files and then copy all un-built assets
-  // over to www/. Last step is running cordova prepare so we can refresh the ripple
-  // browser tab to see the changes. Technically ripple runs `cordova prepare` on browser
-  // refreshes, but at this time you would need to re-run the emulator to see changes.
-  grunt.registerTask('ripple', ['wiredep', 'newer:copy:app', 'ripple-emulator']);
+  grunt.registerTask('ripple', ['ripple-emulator']);
   grunt.registerTask('ripple-emulator', function() {
     grunt.config.set('watch', {
       all: {
         files: _.flatten(_.pluck(grunt.config.get('watch'), 'files')),
-        tasks: ['newer:copy:app', 'prepare']
+        tasks: ['prepare']
       }
     });
 
