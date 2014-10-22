@@ -1,5 +1,10 @@
 'use strict';
 
+var _ = require('lodash');
+var path = require('path');
+var cordovaCli = require('cordova');
+var spawn = require('child_process').spawn;
+
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -208,6 +213,61 @@ module.exports = function(grunt) {
     }
   });
 
+  // Register tasks for all Cordova commands
+  _.functions(cordovaCli).forEach(function(name) {
+    grunt.registerTask(name, function() {
+      this.args.unshift(name.replace('cordova:', ''));
+      // Handle URL's being split up by Grunt because of `:` characters
+      if (_.contains(this.args, 'http') || _.contains(this.args, 'https')) {
+        this.args = this.args.slice(0, -2).concat(_.last(this.args, 2).join(':'));
+      }
+      var done = this.async();
+      var exec = process.platform === 'win32' ? 'cordova.cmd' : 'cordova';
+      var cmd = path.resolve('./node_modules/cordova/bin', exec);
+      var flags = process.argv.splice(3);
+      var child = spawn(cmd, this.args.concat(flags));
+      child.stdout.on('data', function(data) {
+        grunt.log.writeln(data);
+      });
+      child.stderr.on('data', function(data) {
+        grunt.log.error(data);
+      });
+      child.on('close', function(code) {
+        code = code ? false : true;
+        done(code);
+      });
+    });
+  });
+
+  // Since Apache Ripple serves assets directly out of their respective platform
+  // directories, we watch all registered files and then copy all un-built assets
+  // over to www/. Last step is running cordova prepare so we can refresh the ripple
+  // browser tab to see the changes. Technically ripple runs `cordova prepare` on browser
+  // refreshes, but at this time you would need to re-run the emulator to see changes.
+  grunt.registerTask('ripple', ['wiredep', 'newer:copy:app', 'ripple-emulator']);
+  grunt.registerTask('ripple-emulator', function() {
+    grunt.config.set('watch', {
+      all: {
+        files: _.flatten(_.pluck(grunt.config.get('watch'), 'files')),
+        tasks: ['newer:copy:app', 'prepare']
+      }
+    });
+
+    var cmd = path.resolve('./node_modules/ripple-emulator/bin', 'ripple');
+    var child = spawn(cmd, ['emulate']);
+    child.stdout.on('data', function(data) {
+      grunt.log.writeln(data);
+    });
+    child.stderr.on('data', function(data) {
+      grunt.log.error(data);
+    });
+    process.on('exit', function(code) {
+      child.kill('SIGINT');
+      process.exit(code);
+    });
+
+    return grunt.task.run(['watch']);
+  });
   // Default task.
   grunt.registerTask('default', ['jshint', 'karma']);
   grunt.registerTask('serve', [
